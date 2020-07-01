@@ -1,0 +1,6 @@
+tools/build.py --debug --logging=on --error-messages=on --line-info=on --builddir=$(pwd)/example_build --cmake-param="-DCMAKE_INSTALL_PREFIX=$(pwd)/example_install/"
+make -C $(pwd)/example_build install
+export PKG_CONFIG_PATH=$(pwd)/example_install/lib/pkgconfig/
+pkg-config --cflags --libs libjerry-core libjerry-port-default libjerry-ext libjerry-libm
+gcc xlz/api-example-6.c -o xlz/api-example-6 $(pkg-config --cflags --libs libjerry-core libjerry-port-default libjerry-libm)
+gcc xlz/api-example-6.c -o xlz/api-example-6 $(pkg-config --cflags --libs libjerry-core libjerry-ext libjerry-port-default libjerry-libm)

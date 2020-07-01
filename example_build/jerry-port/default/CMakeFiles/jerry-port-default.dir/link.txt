@@ -1,0 +1,2 @@
+gcc-ar qc ../../lib/libjerry-port-default.a  CMakeFiles/jerry-port-default.dir/default-date.c.o CMakeFiles/jerry-port-default.dir/default-debugger.c.o CMakeFiles/jerry-port-default.dir/default-external-context.c.o CMakeFiles/jerry-port-default.dir/default-fatal.c.o CMakeFiles/jerry-port-default.dir/default-io.c.o CMakeFiles/jerry-port-default.dir/default-module.c.o
+gcc-ranlib ../../lib/libjerry-port-default.a
