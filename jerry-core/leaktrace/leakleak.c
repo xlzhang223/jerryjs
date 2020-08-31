@@ -16,7 +16,6 @@ void alloc_bitmap(void){
 
 void free_bitmap(void){
     printf("zhang free bitmap \n");
-    printf("zhang leak obj %#x and line: 4 \n",last_obj_p);
     free(bit_p);
 }
 
