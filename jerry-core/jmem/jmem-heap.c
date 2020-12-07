@@ -25,7 +25,7 @@
 
 #define JMEM_ALLOCATOR_INTERNAL
 #include "jmem-allocator-internal.h"
-//zhang
+//JsObjecTracer
 #include "leakleak.h"
 //<<
 /** \addtogroup mem Memory allocation
@@ -34,7 +34,7 @@
  * \addtogroup heap Heap
  * @{
  */
-//zhang heap
+//JsObjecTracer heap
 #if !ENABLED (JERRY_SYSTEM_ALLOCATOR)
 /**
  * End of list marker.
@@ -74,9 +74,8 @@ jmem_heap_get_region_end (jmem_heap_free_t *curr_p) /**< current region */
 void
 jmem_heap_init (void)
 {
-  //zhang
-  dump_obj_info();
-  alloc_bitmap();
+  //JsObjecTracer
+  alloc_bitmap(JMEM_HEAP_SIZE);
   // <<
 #if !ENABLED (JERRY_SYSTEM_ALLOCATOR)
 #if !ENABLED (JERRY_CPOINTER_32_BIT)
@@ -110,7 +109,7 @@ jmem_heap_init (void)
 void
 jmem_heap_finalize (void)
 {
-  //zhang
+  //JsObjecTracer
   free_bitmap();
   //<<
   JERRY_ASSERT (JERRY_CONTEXT (jmem_heap_allocated_size) == 0);

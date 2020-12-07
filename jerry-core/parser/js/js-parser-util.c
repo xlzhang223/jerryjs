@@ -280,7 +280,7 @@ parser_flush_cbc (parser_context_t *context_p) /**< context */
       parser_raise_error (context_p, PARSER_ERR_STACK_LIMIT_REACHED);
     }
   }
-  //zhang flush_cbc
+  //JsObjecTracer flush_cbc
   // if(last_opcode == CBC_CREATE_OBJECT){
   //   printf("parser_flush_cbc new obj and line %d\n",context_p->line);
   //   printf("parser_flush_cbc new byte_code_size %d\n",context_p->byte_code_size);

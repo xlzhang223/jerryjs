@@ -15,7 +15,7 @@
 cmake_minimum_required (VERSION 2.8.12)
 set(JERRY_CORE_NAME jerry-core)
 project (${JERRY_CORE_NAME} C)
-
+add_compile_options(-std=gnu99)
 # Optional build settings
 set(ENABLE_ALL_IN_ONE               OFF     CACHE BOOL   "Enable all-in-one build?")
 
@@ -126,7 +126,7 @@ set(INCLUDE_CORE_PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/vm"
     "${CMAKE_CURRENT_SOURCE_DIR}/leaktrace"
     )
-# //zhang 
+# //JsObjecTracer 
 set(INCLUDE_CORE_PUBLIC ${INCLUDE_CORE_PUBLIC} PARENT_SCOPE) # for jerry-port
 set(INCLUDE_CORE_PRIVATE ${INCLUDE_CORE_PRIVATE} PARENT_SCOPE) # for tests/unit-core
 
@@ -148,7 +148,7 @@ file(GLOB SOURCE_CORE_FILES
      vm/*.c
      leaktrace/*.c)
 
-# //zhang
+# //JsObjecTracer
 
 # All-in-one build
 if(ENABLE_ALL_IN_ONE)

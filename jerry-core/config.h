@@ -237,7 +237,7 @@
  * Default value: 0
  */
 #ifndef JERRY_LINE_INFO
-//zhang config
+//JsObjecTracer config
 # define JERRY_LINE_INFO 1
 #endif /* !defined (JERRY_LINE_INFO) */
 
@@ -321,7 +321,7 @@
  * Default value: 0
  */
 #ifndef JERRY_PARSER_DUMP_BYTE_CODE
-//zhang conf
+//JsObjecTracer conf
 # define JERRY_PARSER_DUMP_BYTE_CODE 1
 #endif /* defined (JERRY_PARSER_DUMP_BYTE_CODE) */
 
@@ -351,7 +351,7 @@
  * Default value: 0
  */
 #ifndef JERRY_REGEXP_DUMP_BYTE_CODE
-//zhang conf
+//JsObjecTracer conf
 # define JERRY_REGEXP_DUMP_BYTE_CODE 1
 #endif /* !defined (JERRY_REGEXP_DUMP_BYTE_CODE) */
 

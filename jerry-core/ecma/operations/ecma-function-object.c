@@ -1024,8 +1024,8 @@ ecma_op_function_call (ecma_object_t *func_obj_p, /**< Function object */
                        const ecma_value_t *arguments_list_p, /**< arguments list */
                        ecma_length_t arguments_list_len) /**< length of arguments list */
 {
-  //zhang call zhang fun obj
-  printf("zhang ecma_op_function_call of  %#x\n",(func_obj_p));
+  //JsObjecTracer call JsObjecTracer fun obj
+  // printf("JsObjecTracer ecma_op_function_call of  %#x\n",(func_obj_p));
   //
   JERRY_ASSERT (func_obj_p != NULL
                 && !ecma_is_lexical_environment (func_obj_p));

@@ -762,7 +762,7 @@ typedef enum
  * Description of ECMA-object or lexical environment
  * (depending on is_lexical_environment).
  */
-//zhang obj
+//JsObjecTracer obj
 typedef struct
 {
   /** type : 4 bit : ecma_object_type_t or ecma_lexical_environment_type_t

@@ -19,8 +19,8 @@ project (${JERRY_LIBM_NAME} C)
 # Compiler / linker flags
 # TODO: Reduce the below list of warning/error disablings as much as possible
 set(COMPILE_FLAGS_LIBM "${COMPILE_FLAGS_LIBM} -Wno-error=sign-compare")
-set(COMPILE_FLAGS_LIBM "${COMPILE_FLAGS_LIBM} -Wno-error=sign-conversion")
-set(COMPILE_FLAGS_LIBM "${COMPILE_FLAGS_LIBM} -Wno-sign-conversion")
+# set(COMPILE_FLAGS_LIBM "${COMPILE_FLAGS_LIBM} -Wno-error=sign-conversion")
+# set(COMPILE_FLAGS_LIBM "${COMPILE_FLAGS_LIBM} -Wno-sign-conversion")
 set(COMPILE_FLAGS_LIBM "${COMPILE_FLAGS_LIBM} -Wno-sign-compare")
 set(COMPILE_FLAGS_LIBM "${COMPILE_FLAGS_LIBM} -Wno-strict-aliasing")
 

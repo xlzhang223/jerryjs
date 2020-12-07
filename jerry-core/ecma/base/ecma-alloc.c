@@ -71,16 +71,13 @@ ecma_dealloc_number (ecma_number_t *number_p) /**< number to be freed */
  *
  * @return pointer to allocated memory
  */
-//zhang alloc obj and ex_obj
+//JsObjecTracer alloc obj and ex_obj
 inline ecma_object_t * JERRY_ATTR_ALWAYS_INLINE
 ecma_alloc_object (void)
 {
 #if ENABLED (JERRY_MEM_STATS)
   jmem_stats_allocate_object_bytes (sizeof (ecma_object_t));
 #endif /* ENABLED (JERRY_MEM_STATS) */
-  //zhang debug>>
-  // puts("ecma_alloc_object");
-  //<<
   return (ecma_object_t *) jmem_pools_alloc (sizeof (ecma_object_t));
 } /* ecma_alloc_object */
 
@@ -108,9 +105,6 @@ ecma_alloc_extended_object (size_t size) /**< size of object */
 #if ENABLED (JERRY_MEM_STATS)
   jmem_stats_allocate_object_bytes (size);
 #endif /* ENABLED (JERRY_MEM_STATS) */
-  //zhang debug>>
-  // puts("ecma_alloc_extended_object");
-  //<<
   return jmem_heap_alloc_block (size);
 } /* ecma_alloc_extended_object */
 

@@ -1,7 +1,8 @@
 # Produced files
 .mbedignore
 build/*
-
+example_build/*
+example_install/*
 # IDE related files
 nbproject
 *.sublime-project

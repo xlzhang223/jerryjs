@@ -2223,18 +2223,18 @@ scanner_scan_all (parser_context_t *context_p, /**< context */
   scanner_context_t scanner_context;
 
 #if ENABLED (JERRY_PARSER_DUMP_BYTE_CODE)
-  //zhang
+  //JsObjecTracer
   printf("OPEN JERRY_PARSER_DUMP_BYTE_CODE\n");
   //
   if (context_p->is_show_opcodes)
   {
-    //zhang
+    //JsObjecTracer
     printf("context_p->is_show_opcodes\n");
     //
     JERRY_DEBUG_MSG ("\n--- Scanning start ---\n\n");
   }
 #else
-//zhang
+//JsObjecTracer
   printf("DON'T OPEN JERRY_PARSER_DUMP_BYTE_CODE\n");
   //
 #endif /* ENABLED (JERRY_PARSER_DUMP_BYTE_CODE) */

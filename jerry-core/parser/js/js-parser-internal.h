@@ -451,7 +451,7 @@ typedef struct
     scanner_context_t *scanner_context_p;     /**< scanner context for the pre-scanner */
   } u;
   uint32_t allocated_buffer_size;             /**< size of the dinamically allocated buffer */
-  //zhang line
+  //JsObjecTracer line
   /* Parser members. */
   uint32_t status_flags;                      /**< status flags */
   uint32_t global_status_flags;               /**< global status flags */

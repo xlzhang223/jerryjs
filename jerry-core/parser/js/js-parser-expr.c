@@ -841,13 +841,6 @@ parser_parse_object_literal (parser_context_t *context_p) /**< context */
 {
   JERRY_ASSERT (context_p->token.type == LEXER_LEFT_BRACE);
   parser_emit_cbc (context_p, CBC_CREATE_OBJECT);
-  //zhang len
-  // printf("zhang new obj and line %d\n",context_p->line);
-  // printf("zhang new byte_code_size %d\n",context_p->byte_code_size);
-  // printf("zhang new context_p->byte_code.last_position %d\n",context_p->byte_code.last_position);
-  // printf("zhang new context_p->byte_code.last_p %#x\n",context_p->byte_code.last_p+context_p->byte_code.last_position);
-  // printf("zhang new context_p->byte_code.first_p %#x\n",context_p->byte_code.first_p);
-
 #if !ENABLED (JERRY_ES2015)
   parser_stack_push_uint8 (context_p, PARSER_OBJECT_PROPERTY_START);
 #endif /* !ENABLED (JERRY_ES2015) */

@@ -36,7 +36,7 @@
 #include "vm.h"
 #include "vm-stack.h"
 
-//zhang
+//JsObjecTracer
 #include "leakleak.h"
 //<<
 /** \addtogroup vm Virtual machine
@@ -821,7 +821,7 @@ opfunc_call (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
  *
  * See also: ECMA-262 v5, 11.2.2
  */
-//zhang new fun
+//JsObjecTracer new fun
 static void
 opfunc_construct (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
 {
@@ -1004,15 +1004,12 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
     while (true)
     {
       const uint8_t *byte_code_start_p = byte_code_p;
-      //zhang cbc
+      //JsObjecTracer cbc
       if(*byte_code_p == CBC_CREATE_OBJECT){
-        // printf("CBC_CREATE_OBJECT 1\n");
-        // printf("zhang CBC_CREATE_OBJECT bytecode_header_p %#x\n",frame_ctx_p->bytecode_header_p);
-        // printf("zhang CBC_CREATE_OBJECT byte_code_start_p %#x\n",frame_ctx_p->byte_code_start_p);
-        // printf("zhang CBC_CREATE_OBJECT byte_code_p %#x\n",byte_code_p);
-        // printf("zhang CBC_CREATE_OBJECT sub %d\n",frame_ctx_p->byte_code_p - frame_ctx_p->byte_code_start_p);
         #if ENABLED (JERRY_LINE_INFO)
-        printf("zhang CBC_CREATE_OBJECT current_line %d\n",frame_ctx_p->current_line);
+        set_line(frame_ctx_p->current_line,(char*)(ECMA_ASCII_STRING_GET_BUFFER(ecma_get_string_from_value (frame_ctx_p->resource_name))));
+        // printf("ecma_get_string_from_value %s\n",ECMA_ASCII_STRING_GET_BUFFER(ecma_get_string_from_value (frame_ctx_p->resource_name)));
+        // printf("%s",ECMA_ASCII_STRING_GET_BUFFER())
         #endif /* ENABLED (JERRY_LINE_INFO) */
       }
       //
@@ -1243,21 +1240,12 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         }
         case VM_OC_PUSH_OBJECT:
         {
-          //zhang idxframe_ctx_p->byte_code_p
-          // printf("zhang VM_OC_PUSH_OBJECT byte_code_p %d\n",byte_code_p-frame_ctx_p->byte_code_start_p);
-          // printf("zhang VM_OC_PUSH_OBJECT byte_code_p %d\n",frame_ctx_p->byte_code_p-frame_ctx_p->byte_code_start_p);
-          // <<
           ecma_object_t *obj_p = ecma_create_object (ecma_builtin_get (ECMA_BUILTIN_ID_OBJECT_PROTOTYPE),
                                                      0,
                                                      ECMA_OBJECT_TYPE_GENERAL);
-          //zhang alloc obj at
-          printf("zhang VM_OC_PUSH_OBJECT of  %#x\n",obj_p);
-
-          set_last_obj(obj_p);
-          // for(uintptr_t i=32;i!=0;i--){
-          //     if((((uintptr_t)obj_p)>>(i-1))&1) printf("1");
-          //     else printf("0");
-          // }
+          //JsObjecTracer alloc obj at
+          set_obj_line_info(jmem_compress_pointer(obj_p));
+          set_obj_flag(jmem_compress_pointer(obj_p),1);
           // <<
           *stack_top_p++ = ecma_make_object_value (obj_p);
           continue;
@@ -1593,7 +1581,7 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
 #endif /* ENABLED (JERRY_SNAPSHOT_EXEC) */
         case VM_OC_SET_PROPERTY:
         {
-          //zhang VM_OC_SET_PROPERTY
+          //JsObjecTracer VM_OC_SET_PROPERTY
           //
           JERRY_STATIC_ASSERT (VM_OC_NON_STATIC_FLAG == VM_OC_BACKWARD_BRANCH,
                                vm_oc_non_static_flag_must_be_equal_to_vm_oc_backward_branch);
@@ -1622,12 +1610,9 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
 #endif /* ENABLED (JERRY_ES2015) */
 
           ecma_object_t *object_p = ecma_get_object_from_value (stack_top_p[index]);
-          //zhang VM_OC_SET_PROPERTY
-          printf("zhang VM_OC_SET_PROPERTY of  %#x\n",object_p);
-          // #if ENABLED (JERRY_LINE_INFO)
-          // printf("zhang VM_OC_SET_PROPERTY current_line %d\n",frame_ctx_p->current_line);
-          // #endif /* ENABLED (JERRY_LINE_INFO) */
-          //
+          //JsObjecTracer VM_OC_SET_PROPERTY
+          set_obj_flag(jmem_compress_pointer(object_p),1);
+          //<<
           JERRY_ASSERT (!ecma_op_object_is_fast_array (object_p));
 
           ecma_property_t *property_p = ecma_find_named_property (object_p, prop_name_p);
@@ -2107,9 +2092,11 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         case VM_OC_PROP_GET:
         {
 
-          //zhang vm_op_get_value
-          //zhang log
-          printf("zhang VM_OC_PROP_GET of  %#x\n",ecma_get_object_from_value(left_value));
+          //JsObjecTracer vm_op_get_value
+          //JsObjecTracer log
+          // printf("JsObjecTracer VM_OC_PROP_GET of  %#x\n",ecma_get_object_from_value(left_value));
+          // set_obj_flag(jmem_compress_pointer(object_p),1);
+          set_obj_flag(jmem_compress_pointer(ecma_get_object_from_value(left_value)),1);
           //
           //
           result = vm_op_get_value (left_value, right_value);
@@ -2143,8 +2130,8 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
             *stack_top_p++ = left_value;
             *stack_top_p++ = right_value;
           }
-          //zhang call
-          printf("zhang VM_OC_PROP_REFERENCE of  %#x\n",ecma_get_object_from_value(left_value));
+          //JsObjecTracer call
+          set_obj_flag(jmem_compress_pointer(ecma_get_object_from_value(left_value)),1);
           //
           /* FALLTHRU */
         }
@@ -2339,6 +2326,8 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         {
           result = stack_top_p[-1];
           stack_top_p[-1] = left_value;
+          //JsObjecTracer to do
+          // set_obj_flag(jmem_compress_pointer(ecma_get_object_from_value(result)),1);
           left_value = ECMA_VALUE_UNDEFINED;
           break;
         }
@@ -3760,7 +3749,10 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
       {
         ecma_value_t property = *(--stack_top_p);
         ecma_value_t object = *(--stack_top_p);
-
+        //JsObjecTracer log
+        // printf("JsObjecTracer vm_op_set_value of  %#x\n",ecma_get_object_from_value(object));
+        set_obj_flag(jmem_compress_pointer(ecma_get_object_from_value(object)),1);
+        // <<
         if (object == ECMA_VALUE_REGISTER_REF)
         {
           property = (ecma_value_t) ecma_get_integer_from_value (property);
@@ -3779,9 +3771,7 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
                                                            property,
                                                            result,
                                                            is_strict);
-          //zhang log
-          printf("zhang vm_op_set_value of  %#x\n",ecma_get_object_from_value(object));
-          // <<
+          
           if (ECMA_IS_VALUE_ERROR (set_value_result))
           {
             ecma_free_value (result);
@@ -3968,7 +3958,7 @@ error:
  * @return ECMA_VALUE_ERROR - if the initialization fails
  *         ECMA_VALUE_EMPTY - otherwise
  */
-//zhang vm init 
+//JsObjecTracer vm init 
 static void JERRY_ATTR_NOINLINE
 vm_init_exec (vm_frame_ctx_t *frame_ctx_p, /**< frame context */
               const ecma_value_t *arg_p, /**< arguments list */

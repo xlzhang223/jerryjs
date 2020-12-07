@@ -84,7 +84,7 @@ jerry_port_log (jerry_log_level_t level, /**< message log level */
   {
     va_list args;
     va_start (args, format);
-    //zhang log
+    //JsObjecTracer log
     // vfprintf(stdout,format,args);
     // va_end (args);
     // va_start (args, format);

@@ -6,7 +6,7 @@ int main (void) {
 				print ('Hello o from world!');\n \
 				var person2 = {firstName:\"Bzill\", lastName:\"Gzates\", age:12, eyeColor:\"blue\"}; \n \
         var person3 = {firstName:\"zill\", lastName:\"ates\", age:12, eyeColor:\"red\"}; \n \
-				person[\"lastName\"] = \"zhang\";	\n \
+				person[\"lastName\"] = \"JsObjecTracer\";	\n \
 				person[\"firstName\"] = \"long\";	\n \
 				person2[\"lastName\"];\n \
 				person[\"foo\"] = function (a, b) {return a * b}; \n \

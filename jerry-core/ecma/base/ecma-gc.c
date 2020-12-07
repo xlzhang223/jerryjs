@@ -34,7 +34,7 @@
 #include "re-compiler.h"
 #include "vm-defines.h"
 #include "vm-stack.h"
-//zhang
+//JsObjecTracer
 #include "leakleak.h"
 //<<
 #if ENABLED (JERRY_ES2015_BUILTIN_TYPEDARRAY)
@@ -1005,15 +1005,15 @@ ecma_gc_free_properties (ecma_object_t *object_p) /**< object */
     ecma_dealloc_property_pair (prop_pair_p);
   }
 } /* ecma_gc_free_properties */
-//zhang free all obj
+//free all obj
 /**
  * Free specified object.
  */
 static void
 ecma_gc_free_object (ecma_object_t *object_p) /**< object to free */
 {
-  //zhang
-  free_obj();
+  //JsObjecTracer
+  // free_obj();
   //
   JERRY_ASSERT (object_p != NULL
                 && !ecma_gc_is_object_visited (object_p)
@@ -1347,7 +1347,7 @@ ecma_gc_free_object (ecma_object_t *object_p) /**< object to free */
 void
 ecma_gc_run (void)
 {
-  //zhang
+  //JsObjecTracer
   gc_run();
   //<<
 #if (JERRY_GC_MARK_LIMIT != 0)
@@ -1372,6 +1372,15 @@ ecma_gc_run (void)
   {
     obj_iter_p = JMEM_CP_GET_NON_NULL_POINTER (ecma_object_t, obj_iter_cp);
     const jmem_cpointer_t obj_next_cp = obj_iter_p->gc_next_cp;
+    
+    //JsObjecTracer
+    if(!get_obj_flag(obj_iter_cp)){
+        dump_obj_info(obj_iter_cp);
+    }
+    else{
+        set_obj_flag(obj_iter_cp,0);
+    }
+    //end
 
     JERRY_ASSERT (obj_prev_p == NULL
                   || ECMA_GET_NON_NULL_POINTER (ecma_object_t, obj_prev_p->gc_next_cp) == obj_iter_p);
@@ -1399,7 +1408,7 @@ ecma_gc_run (void)
   obj_iter_cp = black_list_head.gc_next_cp;
   while (obj_iter_cp != JMEM_CP_NULL)
   {
-    obj_iter_p = JMEM_CP_GET_NON_NULL_POINTER (ecma_object_t, obj_iter_cp);
+    obj_iter_p = JMEM_CP_GET_NON_NULL_POINTER (ecma_object_t, obj_iter_cp);  
     ecma_gc_mark (obj_iter_p);
     obj_iter_cp = obj_iter_p->gc_next_cp;
   }
@@ -1417,6 +1426,8 @@ ecma_gc_run (void)
 
     obj_prev_p = &white_gray_list_head;
     obj_iter_cp = obj_prev_p->gc_next_cp;
+
+
 
     while (obj_iter_cp != JMEM_CP_NULL)
     {

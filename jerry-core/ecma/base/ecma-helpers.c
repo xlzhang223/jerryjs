@@ -70,7 +70,7 @@ JERRY_STATIC_ASSERT (ECMA_PROPERTY_TYPE_DELETED == (ECMA_DIRECT_STRING_MAGIC << 
  *
  * @return pointer to the object's descriptor
  */
-//zhang alloc obj
+//JsObjecTracer alloc obj
 ecma_object_t *
 ecma_create_object (ecma_object_t *prototype_object_p, /**< pointer to prototybe of the object (or NULL) */
                     size_t ext_object_size, /**< size of extended objects */
@@ -513,7 +513,7 @@ ecma_create_property (ecma_object_t *object_p, /**< the object */
  *
  * @return pointer to the newly created property value
  */
-//zhang new property
+//JsObjecTracer new property
 ecma_property_value_t *
 ecma_create_named_data_property (ecma_object_t *object_p, /**< object */
                                  ecma_string_t *name_p, /**< property name */

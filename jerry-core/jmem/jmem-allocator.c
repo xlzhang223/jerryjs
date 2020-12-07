@@ -209,7 +209,7 @@ jmem_compress_pointer (const void *pointer_p) /**< pointer to compress */
  *
  * @return unpacked pointer
  */
-//zhang compress ptr
+//JsObjecTracer compress ptr
 inline void * JERRY_ATTR_PURE JERRY_ATTR_ALWAYS_INLINE
 jmem_decompress_pointer (uintptr_t compressed_pointer) /**< pointer to decompress */
 {

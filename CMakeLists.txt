@@ -193,7 +193,7 @@ if(USING_GCC OR USING_CLANG)
   jerry_add_compile_flags(-std=c99 -pedantic)
   # Turn off stack protector
   jerry_add_compile_flags(-fno-builtin -fno-stack-protector)
-  jerry_add_compile_warnings(all extra format-nonliteral init-self conversion sign-conversion format-security missing-declarations shadow strict-prototypes undef old-style-definition)
+  jerry_add_compile_warnings(all extra format-nonliteral init-self  format-security missing-declarations shadow strict-prototypes undef old-style-definition)
   jerry_add_compile_flags(-Wno-stack-protector -Wno-attributes -Werror)
 endif()
 
