@@ -2224,7 +2224,7 @@ scanner_scan_all (parser_context_t *context_p, /**< context */
 
 #if ENABLED (JERRY_PARSER_DUMP_BYTE_CODE)
   //JsObjecTracer
-  printf("OPEN JERRY_PARSER_DUMP_BYTE_CODE\n");
+  // printf("OPEN JERRY_PARSER_DUMP_BYTE_CODE\n");
   //
   if (context_p->is_show_opcodes)
   {
