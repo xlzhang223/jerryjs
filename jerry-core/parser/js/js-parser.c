@@ -1983,6 +1983,11 @@ parser_parse_source (const uint8_t *arg_list_p, /**< function argument list */
 
 #if ENABLED (JERRY_PARSER_DUMP_BYTE_CODE)
   context.is_show_opcodes = (JERRY_CONTEXT (jerry_init_flags) & ECMA_INIT_SHOW_OPCODES);
+
+  //jsobj
+  // context.is_show_opcodes = (JERRY_CONTEXT (jerry_init_flags) | ECMA_INIT_SHOW_OPCODES);
+  //<<
+
   context.total_byte_code_size = 0;
 
   if (context.is_show_opcodes)

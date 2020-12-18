@@ -1005,7 +1005,8 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
     {
       const uint8_t *byte_code_start_p = byte_code_p;
       //JsObjecTracer cbc
-      if(*byte_code_p == CBC_CREATE_OBJECT){
+      if(*byte_code_p == CBC_CREATE_OBJECT|| \
+        *byte_code_p == CBC_CREATE_ARRAY){
         #if ENABLED (JERRY_LINE_INFO)
         set_line(frame_ctx_p->current_line,(char*)(ECMA_ASCII_STRING_GET_BUFFER(ecma_get_string_from_value (frame_ctx_p->resource_name))));
         // printf("ecma_get_string_from_value %s\n",ECMA_ASCII_STRING_GET_BUFFER(ecma_get_string_from_value (frame_ctx_p->resource_name)));
@@ -1033,7 +1034,7 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         uint16_t literal_index;
         READ_LITERAL_INDEX (literal_index);
         READ_LITERAL (literal_index, left_value);
-
+        
         if (operands != VM_OC_GET_LITERAL)
         {
           switch (operands)
@@ -1162,12 +1163,12 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         case VM_OC_PUSH_THREE:
         {
           uint16_t literal_index;
-
+            
           *stack_top_p++ = left_value;
           left_value = ECMA_VALUE_UNDEFINED;
-
           READ_LITERAL_INDEX (literal_index);
           READ_LITERAL (literal_index, left_value);
+          
 
           *stack_top_p++ = right_value;
           *stack_top_p++ = left_value;
@@ -1682,7 +1683,14 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         case VM_OC_PUSH_ARRAY:
         {
           // Note: this operation cannot throw an exception
-          *stack_top_p++ = ecma_make_object_value (ecma_op_new_fast_array_object (0));
+          ecma_object_t * obj_p = ecma_op_new_fast_array_object (0);
+          
+          *stack_top_p++ = ecma_make_object_value (obj_p);
+          //JsObjecTracer alloc obj at
+          // printf("nobug %d\n",jmem_compress_pointer(obj_p));
+          set_obj_line_info(jmem_compress_pointer(obj_p));
+          set_obj_flag(jmem_compress_pointer(obj_p),0);
+          // <<
           continue;
         }
 #if ENABLED (JERRY_ES2015)
@@ -2041,7 +2049,10 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
           }
 #endif /* ENABLED (JERRY_ES2015) */
           result = opfunc_append_array (stack_top_p, values_length);
+          //jsobj
+          // printf("ooowww %d\n",frame_ctx_p->current_line);
 
+          //endd
 #if ENABLED (JERRY_ES2015)
           if (ECMA_IS_VALUE_ERROR (result))
           {

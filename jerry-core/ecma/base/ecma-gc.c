@@ -1366,7 +1366,18 @@ ecma_gc_run (void)
   ecma_object_t *obj_prev_p = &white_gray_list_head;
   jmem_cpointer_t obj_iter_cp = obj_prev_p->gc_next_cp;
   ecma_object_t *obj_iter_p;
+  //JsObjecTracer
+  for(int i=0;i < 8 * 1024;i++){
+      if(get_obj_line_info(i) == 0) continue;
+      if(!get_obj_flag(i)){
+        dump_obj_info(i);
+      }
+      else{
+          set_obj_flag(i,0);
+      }
+  }
 
+  //end
   /* Move root objects (i.e. they have global or stack references) to the black list. */
   while (obj_iter_cp != JMEM_CP_NULL)
   {
@@ -1374,12 +1385,12 @@ ecma_gc_run (void)
     const jmem_cpointer_t obj_next_cp = obj_iter_p->gc_next_cp;
     
     //JsObjecTracer
-    if(!get_obj_flag(obj_iter_cp)){
-        dump_obj_info(obj_iter_cp);
-    }
-    else{
-        set_obj_flag(obj_iter_cp,0);
-    }
+    // if(!get_obj_flag(obj_iter_cp)){
+    //     dump_obj_info(obj_iter_cp);
+    // }
+    // else{
+    //     set_obj_flag(obj_iter_cp,0);
+    // }
     //end
 
     JERRY_ASSERT (obj_prev_p == NULL
